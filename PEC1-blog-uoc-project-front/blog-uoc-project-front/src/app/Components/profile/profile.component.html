@@ -1,0 +1,91 @@
+<div style="margin-left: auto; margin-right: auto">
+  <p id="profileFeedback"></p>
+</div>
+<div>
+  <h1>Profile</h1>
+
+  <!-- TODO 6 -->
+
+  
+  <form [formGroup]="profileForm" (ngSubmit)="updateUser()">
+    <label for="name">Name: </label>
+    <input type="text" formControlName="name">
+
+    <label for="surname_1">Surname 1: </label>
+    <input type="text" formControlName="surname_1">
+
+    <label for="surname_2">Surname 2: </label>
+    <input type="text" formControlName="surname_2">
+
+    <label for="alias">Alias: </label>
+    <input type="text" formControlName="alias">
+
+    <label for="birth_date">Birth date: </label>
+    <input type="date" formControlName="birth_date">
+
+    <label for="email">Email: </label>
+    <input type="email" formControlName="email">
+
+    <label for="password">Password: </label>
+    <input type="password" formControlName="password">
+
+    <button type="submit" [disabled] = "!profileForm.valid">Update User</button>
+    <div *ngIf = "name.errors">
+      <span
+        style="color: red"
+        *ngIf="name.errors && (name.touched || name.dirty)">
+        <span *ngIf="name.errors['required']">Name is required</span>
+        <span *ngIf="name.errors['minlength']">Name must be greater that 5 characters</span>
+        <span *ngIf="name.errors['maxlength']">Name must be shorter that 25 characters</span>
+      </span>
+    </div>
+
+    <div *ngIf = "surname_1.errors">
+      <span
+        style="color: red"
+        *ngIf="surname_1.errors && (surname_1.touched || surname_1.dirty)">
+        <span *ngIf="surname_1.errors['required']">Surname 1 is required</span>
+        <span *ngIf="surname_1.errors['minlength']">Surname 1 must be greater that 5 characters</span>
+        <span *ngIf="surname_1.errors['maxlength']">Surname 1 must be shorter that 25 characters</span>
+      </span>
+    </div>
+
+
+
+    <div *ngIf = "alias.errors">
+      <span
+        style="color: red"
+        *ngIf="alias.errors && (alias.touched || alias.dirty)">
+        <span *ngIf="alias.errors['required']">Alias is required</span>
+        <span *ngIf="alias.errors['minlength']">Alias must be greater that 5 characters</span>
+        <span *ngIf="alias.errors['maxlength']">Alias must be shorter that 25 characters</span>
+      </span>
+    </div>
+
+    <div *ngIf = "birth_date.errors">
+      <span
+        style="color: red"
+        *ngIf="birth_date.errors && (birth_date.touched || birth_date.dirty)">
+        <span *ngIf="birth_date.errors?.['required']">Birth Date is required</span>
+      </span>
+    </div>
+
+    <div *ngIf = "email.errors">
+      <span
+        style="color: red"
+        *ngIf="email.errors && (email.touched || email.dirty)">
+        <span *ngIf="email.errors['required']">Email is required </span>
+       </span>
+    </div>
+
+    <div *ngIf = "password.errors">
+      <span
+        style="color: red"
+        *ngIf="password.errors && (password.touched || password.dirty)">
+        <span *ngIf="password.errors['required']">Password is required</span>
+        <span *ngIf="password.errors['minlength']">Password must be greater that 8 characters</span>
+        <span *ngIf="password.errors['maxlength']">Password must be shorter that 16 characters</span>
+      </span>
+    </div>
+  </form>
+</div>
