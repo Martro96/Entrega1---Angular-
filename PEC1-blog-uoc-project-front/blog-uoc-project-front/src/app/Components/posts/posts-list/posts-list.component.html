@@ -11,6 +11,8 @@
             <th>Description</th>
             <th>Likes</th>
             <th>Dislikes</th>
+            <th>Publication Date</th>
+            <th>Published by: </th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +25,11 @@
             <td>
                 <button (click)="updatePost(post.postId)">Update Post</button>
                 <button (click)="deletePost(post.postId)">Delete Post</button>
-            </td>            
+            </td>
+            <td>{{post.publication_date | formatDate: 2}}</td>
+            <td>{{post.userAlias}}</td>
+
+            
         </tr>
     </tbody>
  </table>
