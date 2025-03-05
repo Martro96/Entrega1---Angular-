@@ -12,7 +12,8 @@ import {
 } from '@angular/forms';
 import { PostDTO } from 'src/app/Models/post.dto';
 import { CategoryDTO } from 'src/app/Models/category.dto';
-import { promises } from 'dns';
+// import { promises } from 'dns';
+
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
@@ -26,7 +27,6 @@ export class PostFormComponent implements OnInit {
   publication_date: UntypedFormControl;
   selectedCategories: UntypedFormControl; 
 
-  // category: CategoryDTO
 
   postForm: UntypedFormGroup;
   isValidForm: boolean | null;

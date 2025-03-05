@@ -37,7 +37,19 @@ export class HomeComponent {
   }
   private async loadPosts(): Promise<void> {
     // TODO 2
-  }
+    let errorResponse: any;
+    const userId = this.localStorageService.get('user_id');
+    
+    this.showButtons = !!userId; //Como el enunciado nos pide enseñar los botones sólo si el usuario está loggeado, lo convertimos en un booleano.
+    
+      try {
+        this.posts = await this.postService.getPosts(); // Los post se listan siempre, se esté loggeado o no
+      } catch (error: any) {
+        errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse)
+      }
+    }
+  
 
   async like(postId: string): Promise<void> {
     let errorResponse: any;
