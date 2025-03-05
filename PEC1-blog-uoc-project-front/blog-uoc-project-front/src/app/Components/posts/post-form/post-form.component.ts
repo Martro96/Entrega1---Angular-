@@ -129,7 +129,8 @@ export class PostFormComponent implements OnInit {
 
     const userId = this.localStorageService.get('user_id');
       if (userId) {
-      this.post.userId = userId
+      this.post.userId = userId;
+      this.post.categories = this.selectedCategories.value(); //No estoy segura de esta línea
     }
       try {
         await this.postService.createPost(this.post);
