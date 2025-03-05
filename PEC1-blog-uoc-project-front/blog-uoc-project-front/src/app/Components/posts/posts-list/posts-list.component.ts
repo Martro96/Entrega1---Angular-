@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { PostService } from 'src/app/Services/post.service';
 import { SharedService } from 'src/app/Services/shared.service';
+import { CategoryDTO } from 'src/app/Models/category.dto';
+import { CategoryService } from 'src/app/Services/category.service';
+import { PostDTO } from 'src/app/Models/post.dto';
 
 @Component({
   selector: 'app-posts-list',
@@ -10,11 +13,54 @@ import { SharedService } from 'src/app/Services/shared.service';
   styleUrls: ['./posts-list.component.scss'],
 })
 export class PostsListComponent {
+  posts!: PostDTO[];
+
   constructor(
     private postService: PostService,
     private router: Router,
     private localStorageService: LocalStorageService,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.loadPosts();
+  }
   // TODO 12
+
+  private async loadPosts(): Promise<void> {
+    let errorResponse: any;
+    const userId = this.localStorageService.get('user_id');
+    if (userId) {
+      try {
+        const post = await this.postService.getPostById(userId);
+        this.posts = post ? [post] : [];
+      } catch (error: any) {
+        errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse)
+      }
+    }
+  }
+
+  createPost(): void {
+    this.router.navigateByUrl('/user/post');
+  }
+
+  updatePost(postId: string): void {
+    this.router.navigateByUrl('/user/post/' + postId)
+  }
+
+  async deletePost(postId:string): Promise <void> {
+    let errorResponse: any; 
+
+    let result= confirm('Confirm delete post with id: ' + postId + '.');
+    if (result) {
+      try {
+        const rowsAffected = await this.postService.deletePost(postId);
+        if (rowsAffected.affected > 0) {
+          this.loadPosts();
+        }
+      } catch (error: any) {
+        errorResponse. error.error;
+        this.sharedService.errorLog(errorResponse)
+      }
+    }
+  }
 }
