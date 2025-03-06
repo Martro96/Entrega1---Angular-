@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { PostDTO } from '../Models/post.dto';
+// import { promises } from 'dns';
 
 interface updateResponse {
   affected: number;
@@ -27,7 +28,10 @@ export class PostService {
     return this.http.get<PostDTO[]>(this.urlBlogUocApi).toPromise();
   }
 
-  getPostsByUserId() {
+  getPostsByUserId(userId: string): Promise<PostDTO[]> {
+    return this.http
+    .get<PostDTO[]>(this.urlBlogUocApi+ '/user/' + userId)
+    .toPromise();
     // TODO 22
   }
 
@@ -64,4 +68,14 @@ export class PostService {
       .delete<deleteResponse>(this.urlBlogUocApi + '/' + postId)
       .toPromise();
   }
+
+  // getFilteredPost(filteredPosts: string, post:PostDTO): Promise<PostDTO> {
+  //   return this.http
+  //   .put<PostDTO>(this.urlBlogUocApi + '/' + filteredPosts, post)
+  //   .toPromise();
+  // }
+
+  // applyFilter(): Promise<PostDTO[]> { //Esto no sé si está bien
+  //   return this.http.get<PostDTO[]>(this.urlBlogUocApi).toPromise();
+  // }
 }
