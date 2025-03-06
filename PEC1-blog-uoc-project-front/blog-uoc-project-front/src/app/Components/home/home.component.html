@@ -1,26 +1,70 @@
-<!-- TODO 3 -->
 <h1>Home</h1>
-<h2>All posts</h2>
 
+<!-- TODO 10 -->
+<div class="searcher">
+    <label for="search_text">Search: </label>
+    <input id="search_text" type="text" [formControl]="filterControl" placeholder="Search by title, description o categories">
+</div>
+
+<div class="resultsSearchText" *ngIf="filterControl.value">
+    <h2>Your search results</h2>
+    <table>
+        <thead>
+            <tr>
+            <!-- <th>ID</th> Lo quito porque queda horrible-->
+                <th>Title</th>
+                <th>Description</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+                <th>Publication Date</th>
+                <th>Published by</th>
+                <th *ngIf="showButtons">Actions</th>
+              </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of filteredPosts">
+                <!-- <td>{{post.postId}}</td> -->
+                <td>{{post.title}}</td>
+                <td>{{post.description}}</td>
+                <td>{{post.num_likes}}</td>
+                <td>{{post.num_dislikes}}</td>
+                <td>{{post.publication_date | formatDate: 2}}</td>
+                <td>{{post.userAlias}}</td>
+    
+                <td>
+                    <button *ngIf="showButtons" (click)="like(post.postId)">Like</button>
+                    <button *ngIf="showButtons" (click)="dislike(post.postId)">Dislike</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+
+
+<!-- TODO 3 -->
+<h2>All posts</h2>
  <table>
     <thead>
         <tr>
-            <th>ID</th>
+            <!-- <th>ID</th> Lo quito porque queda horrible-->
             <th>Title</th>
             <th>Description</th>
             <th>Categories</th>
+            <br>
             <th>Likes</th>
             <th>Dislikes</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let post of posts">
-            <td>{{post.postId}}</td>
+            <!-- <td>{{post.postId}}</td> Lo quito porque queda horrible -->
             <td>{{post.title}}</td>
             <td>{{post.description}}</td>
             <td>
                 <span *ngFor="let category of post.categories" [style.background-color]="category.css_color" class="category-badge">{{category.title}}</span> 
             </td>
+            <br>
 
             <td>{{post.num_likes}}</td>
             <button type="submit" (click)="like(post.postId)" [hidden] = "!showButtons">Like</button>
