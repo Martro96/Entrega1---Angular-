@@ -68,4 +68,8 @@ export class HeaderComponent implements OnInit {
     this.headerMenusService.headerManagement.next(headerInfo);
     this.router.navigateByUrl('home');
   }
+
+  dashboard(): void {
+    this.router.navigateByUrl('dashboard')
+  }
 }
