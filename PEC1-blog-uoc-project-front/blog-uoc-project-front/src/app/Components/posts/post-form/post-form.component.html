@@ -4,11 +4,14 @@
 <div>
   <!-- TODO 14 -->
   <h1>Post form</h1>
-  <form *ngIf="postForm" [formGroup]="postForm" (ngSubmit)="savePost()">
+  <form 
+  *ngIf="postForm" 
+  [formGroup]="postForm" 
+  (ngSubmit)="savePost()">
 
     <div>
       <label for="title">Title: </label>
-      <input type="text" [formControl]="title" />
+      <input type="text" formControlName="title" />
 
       <div *ngIf="title.errors">
         <div *ngIf="title.errors && isValidForm != null && !isValidForm" [ngClass]="'error'">
@@ -20,7 +23,7 @@
 
     <div>
       <label for="description">Description:</label>
-      <input type="text" [formControl]="description" />
+      <input type="text" formControlName="description" />
 
       <div *ngIf="description.errors">
         <div
@@ -43,7 +46,7 @@
 
     <div>
       <label for="category">Choose a category:</label>
-      <select formControlName="categories" multiple>
+      <select formControlName="categories" [multiple]="true">
         <option *ngFor="let category of categories" [value]="category.categoryId">
           {{category.title}}
         </option>

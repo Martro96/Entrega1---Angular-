@@ -24,18 +24,25 @@ export class PostsListComponent {
     this.loadPosts();
   }
   // TODO 12
-
   private async loadPosts(): Promise<void> {
     let errorResponse: any;
     const userId = this.localStorageService.get('user_id');
+  
+    console.log("User ID obtenido del LocalStorage:", userId); // hago este console para intentar ver qué usuario está leyendo
+  
     if (userId) {
       try {
-        const post = await this.postService.getPostById(userId);
-        this.posts = post ? [post] : [];
-      } catch (error: any) {
+        const post = await this.postService.getPostsByUserId(userId);
+        console.log("Posts obtenidos del servicio:", post); 
+        
+        this.posts = post //? [post] : [];
+    } catch (error: any) {
         errorResponse = error.error;
-        this.sharedService.errorLog(errorResponse)
+        console.error("Error al cargar posts:", errorResponse);
+        this.sharedService.errorLog(errorResponse);
       }
+    } else {
+      console.error("No se encontró `user_id` en LocalStorage");
     }
   }
 

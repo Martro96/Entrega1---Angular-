@@ -30,8 +30,12 @@ export class PostService {
 
   getPostsByUserId(userId: string): Promise<PostDTO[]> {
     return this.http
-    .get<PostDTO[]>(this.urlBlogUocApi+ '/user/' + userId)
-    .toPromise();
+    .get<PostDTO[]>(this.urlBlogUocApi+'/user/'+userId)
+    .toPromise()
+    .catch(error => {
+      console.error('Error in getPostsByUserId', error);
+      throw error;
+    });
     // TODO 22
   }
 

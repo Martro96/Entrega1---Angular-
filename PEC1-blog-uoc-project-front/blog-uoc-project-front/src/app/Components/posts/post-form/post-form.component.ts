@@ -71,6 +71,8 @@ export class PostFormComponent implements OnInit {
         this.categories = category ? [category] : [];
 
         this.post = await this.postService.getPostById(this.postId);
+        // this.post = await this.postService.getPostsByUserId(this.postId);
+
         this.title.setValue(this.post.title);
         this.description.setValue(this.post.description);
         this.publication_date.setValue(this.post.publication_date);
@@ -130,7 +132,7 @@ export class PostFormComponent implements OnInit {
     const userId = this.localStorageService.get('user_id');
       if (userId) {
       this.post.userId = userId;
-      this.post.categories = this.selectedCategories.value(); //No estoy segura de esta línea
+      this.post.categories = this.selectedCategories.value; //No estoy segura de esta línea
     }
       try {
         await this.postService.createPost(this.post);
@@ -154,6 +156,11 @@ export class PostFormComponent implements OnInit {
       return
     }
     this.isValidForm = true;
+    const userId = this.localStorageService.get('user_id');
+    if (userId) {
+      this,this.postForm.value.userId = userId;
+    }
+
     this.post = this.postForm.value;
 
     if (this.isUpdateMode) {
